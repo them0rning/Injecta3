@@ -1,0 +1,40 @@
+name: Build CamInject .deb
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-14
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Theos
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          bash -c "$(curl -fsSL https://raw.githubusercontent.com/theos/theos/master/bin/install-theos)"
+
+      - name: Download SDKs
+        run: |
+          git clone --depth=1 https://github.com/theos/sdks.git /tmp/sdks
+          mkdir -p ~/theos/sdks
+          cp -r /tmp/sdks/*.sdk ~/theos/sdks/ 2>/dev/null || true
+
+      - name: Build .deb
+        env:
+          THEOS: ~/theos
+        run: |
+          cd $GITHUB_WORKSPACE/FinalBuild
+          make package FINALPACKAGE=1
+
+      - name: Upload .deb
+        uses: actions/upload-artifact@v4
+        with:
+          name: CamInject-${{ github.sha }}
+          path: FinalBuild/packages/*.deb
+          retention-days: 30
