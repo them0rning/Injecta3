@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Signal Sileo/Cydia/Zebra to run uicache after install
+# This is the correct way per theapplewiki.com/wiki/Dev:Packaging
+if [ -n "$CYDIA" ]; then
+    echo "finish:uicache" >&"${CYDIA%%\ *}"
+fi
+
+# Also run uicache directly as fallback for dpkg installs
+if [ -x "/var/jb/usr/bin/uicache" ]; then
+    /var/jb/usr/bin/uicache --all
+fi
+
+exit 0

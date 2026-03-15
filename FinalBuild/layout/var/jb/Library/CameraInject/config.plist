@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  /var/jb/Library/CameraInject/config.plist
+  
+  Edit this file on-device to configure CameraInject.
+  After editing, send the Darwin notify to reload without respringing:
+  
+      notifyutil -p com.yourname.camerainject.reload
+  
+  Or simply open any camera app — config is re-read on each session start.
+-->
+<plist version="1.0">
+<dict>
+    <!-- Master on/off switch -->
+    <key>enabled</key>
+    <true/>
+
+    <!--
+      Path to the image to inject.
+      Supported formats: PNG, JPEG, HEIC.
+      Replace this with your test asset path.
+    -->
+    <key>imagePath</key>
+    <string>/var/jb/Library/CameraInject/inject.png</string>
+</dict>
+</plist>
