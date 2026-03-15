@@ -25,13 +25,15 @@ jobs:
           mkdir -p ~/theos/sdks
           cp -r /tmp/sdks/*.sdk ~/theos/sdks/ 2>/dev/null || true
 
-      - name: Build .deb
+- name: Build .deb
         env:
           THEOS: ~/theos
         run: |
           cd $GITHUB_WORKSPACE/FinalBuild
+          chmod +x layout/DEBIAN/extrainst_
+          chmod +x layout/DEBIAN/postrm
           make package FINALPACKAGE=1
-
+          
       - name: Upload .deb
         uses: actions/upload-artifact@v4
         with:
