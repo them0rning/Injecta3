@@ -24,8 +24,8 @@ jobs:
           git clone --depth=1 https://github.com/theos/sdks.git /tmp/sdks
           mkdir -p ~/theos/sdks
           cp -r /tmp/sdks/*.sdk ~/theos/sdks/ 2>/dev/null || true
-
-- name: Build .deb
+     
+      - name: Build .deb
         env:
           THEOS: ~/theos
         run: |
